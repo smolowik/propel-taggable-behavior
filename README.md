@@ -1,4 +1,4 @@
-LikeableBehavior
+TaggableBehavior
 ====================
 
 Installation
@@ -27,6 +27,12 @@ propel.behavior.taggable.class = vendor.smirik.src.propel-taggable-behavior.src.
 Usage
 -----
 
+Behavior creates two persistent tables:
+* tags (id, category_id, name)
+* tags_categories (id, name)
+
+Tags are realted to tags categories. Relation field category_id is not required.
+
 Add to schema.xml:
 
 ``` xml
@@ -36,10 +42,13 @@ Add to schema.xml:
 Behavior will create table *likes* and add several methods to the Model:
 
 ``` php
-
+public function addTags($tags, $category_id = null, PropelPDO $con = null)
+public function removeTags($tags, $category_id = null)
+public function addTag(Tag $tag)
+public function removeTag(Tag $tag)
 ```
 
-*user_id* could be any integer.
+*category_id* is optional parameter.
 
 Requirements
 ------------

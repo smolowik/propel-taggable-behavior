@@ -3,6 +3,8 @@
 /* 
 *  matteosister <matteog@gmail.com>
 *  Just for fun...
+*  Refactored and updated by
+*  Evgeny Smirnov <smirik@gmail.com>
 */
 
 class TaggableBehavior extends Behavior {
@@ -260,7 +262,7 @@ class TaggableBehavior extends Behavior {
 * @param   array|string    \$tags A string for a single tag or an array of strings for multiple tags
 * @param   PropelPDO       \$con optional connection object
 */
-public function addTags(\$tags, \$category_id = false, PropelPDO \$con = null) {
+public function addTags(\$tags, \$category_id = null, PropelPDO \$con = null) {
 	\$arrTags = is_string(\$tags) ? explode(',', \$tags) : \$tags;
 	// Remove duplicate tags. 
 	\$arrTags = array_intersect_key(\$arrTags, array_unique(array_map('strtolower', \$arrTags)));
@@ -269,7 +271,7 @@ public function addTags(\$tags, \$category_id = false, PropelPDO \$con = null) {
 		if (\$tag == \"\") continue;
 		\$theTag = {$this->tagTable->getPhpName()}Query::create()
 			->filterByName(\$tag)
-			->_if(\$category_id)
+			->_if(!is_null(\$category_id))
 				->filterByCategoryId(\$category_id)
 			->_endIf()
 			->findOne();
@@ -311,13 +313,13 @@ public function addTags(\$tags, \$category_id = false, PropelPDO \$con = null) {
 * Remove a tag
 * @param   array|string    \$tags A string for a single tag or an array of strings for multiple tags
 */
-public function removeTags(\$tags, \$category_id = false) {
+public function removeTags(\$tags, \$category_id = null) {
 \$arrTags = is_string(\$tags) ? explode(',', \$tags) : \$tags;
 	foreach (\$arrTags as \$tag) {
 		\$tag = trim(\$tag);
 		\$tagObj = {$this->tagTable->getPhpName()}Query::create()
 			->filterByName(\$tag)
-			->_if(\$category_id)
+			->_if(!is_null(\$category_id))
 				->filterByCategoryId(\$category_id)
 			->_endIf()
 			->findOne();
