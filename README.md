@@ -39,7 +39,7 @@ Add to schema.xml:
 <behavior name="taggable" />
 ```
 
-Behavior will create table *likes* and add several methods to the Model:
+Behavior will add several methods to the Model:
 
 ``` php
 public function addTags($tags, $category_id = null, PropelPDO $con = null)
