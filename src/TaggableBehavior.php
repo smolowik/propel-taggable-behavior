@@ -185,19 +185,6 @@ class TaggableBehavior extends Behavior {
 			}
 		}
 
-		$objFkColumn;
-		if ($this->taggingTable->hasColumn($table->getName().'_id')) 
-		{
-			$objFkColumn = $this->taggingTable->getColumn($table->getName().'_id');
-		} else 
-		{
-			$objFkColumn = $this->taggingTable->addColumn(array(
-				'name'          => $table->getName().'_id',
-				'type'          => PropelTypes::INTEGER,
-				'primaryKey'    => 'true'
-			));
-		}
-
 		$tagFkColumn;
 
 		if ($this->taggingTable->hasColumn('tag_id')) 
@@ -212,6 +199,18 @@ class TaggableBehavior extends Behavior {
 			));
 		}
 
+		$objFkColumn;
+		if ($this->taggingTable->hasColumn($table->getName().'_id')) 
+		{
+			$objFkColumn = $this->taggingTable->getColumn($table->getName().'_id');
+		} else 
+		{
+			$objFkColumn = $this->taggingTable->addColumn(array(
+				'name'          => $table->getName().'_id',
+				'type'          => PropelTypes::INTEGER,
+				'primaryKey'    => 'true'
+			));
+		}
 
 		$this->taggingTable->setIsCrossRef(true);
 
@@ -414,26 +413,26 @@ public function filterByTagAndCategory(\$tagName, \$category_id)
 	{
 		$s = <<<EOF
 
-if (empty(\$tags)) {
-	\$this->removeAllTags(\$con);
-	return;
-}
-
-if (is_string(\$tags)) {
-	\$tagNames = explode(',',\$tags);
-
-	\$tags = TagQuery::create()
-	->filterByName(\$tagNames)
-	->find(\$con);
-
-	\$existingTags = array();
-	foreach (\$tags as \$t) \$existingTags[] = \$t->getName();
-	foreach (array_diff(\$tagNames, \$existingTags) as \$t) {
-		\$tag=new Tag();
-		\$tag->setName(\$t);
-		\$tags->append(\$tag);
+	if (empty(\$tags)) {
+		\$this->removeAllTags(\$con);
+		return;
 	}
-}
+
+	if (is_string(\$tags)) {
+		\$tagNames = explode(',',\$tags);
+
+		\$tags = TagQuery::create()
+		->filterByName(\$tagNames)
+		->find(\$con);
+
+		\$existingTags = array();
+		foreach (\$tags as \$t) \$existingTags[] = \$t->getName();
+		foreach (array_diff(\$tagNames, \$existingTags) as \$t) {
+			\$tag=new Tag();
+			\$tag->setName(\$t);
+			\$tags->append(\$tag);
+		}
+	}
 EOF;
 		$script = preg_replace('/(public function setTags\()PropelCollection ([^{]*{)/', '$1$2'.$s, $script, 1);
 	}
