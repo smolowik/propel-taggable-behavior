@@ -427,6 +427,11 @@ public function filterByTagAndCategory(\$tagName, \$category_id)
 
 		\$existingTags = array();
 		foreach (\$tags as \$t) \$existingTags[] = \$t->getName();
+		foreach (array_diff(\$tagNames, \$existingTags) as \$t) {
+			\$tag=new Tag();
+			\$tag->setName(\$t);
+			\$tags->append(\$tag);
+		}
 	}
 EOF;
 		$script = preg_replace('/(public function setTags\()PropelCollection ([^{]*{)/', '$1$2'.$s, $script, 1);
