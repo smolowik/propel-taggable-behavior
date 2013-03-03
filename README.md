@@ -4,7 +4,7 @@ TaggableBehavior
 Installation
 ------------
 
-Download TaggavleBehavior.php and put it somewhere.
+Download TaggableBehavior.php and put it somewhere.
 
 ``` ini
 propel.behavior.taggable.class = path.to.taggable.behavior
