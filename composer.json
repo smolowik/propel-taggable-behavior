@@ -9,9 +9,6 @@
             "email": "es@4xxi.com"
         }
     ],
-    "require": {
-        "propel/propel1": ">=1.6.*, <=1.7.*"
-    },
     "autoload": {
         "classmap": ["src/"]
     }
