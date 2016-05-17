@@ -44,7 +44,6 @@ class TaggableBehavior extends Behavior {
 
 		$tagCategoryTableName    = $this->getTagCategoryTableName();
 		$tagCategoryTablePhpName = $this->replaceTokens($this->parameters['tag_category_table_phpname']);
-
 		if ($database->hasTable($tagCategoryTableName)) 
 		{
 			$this->tagCategoryTable = $database->getTable($tagCategoryTableName);
@@ -443,4 +442,3 @@ EOF;
 	}
 
 }
-
