@@ -1,5 +1,5 @@
 {
-    "name": "smirik/propel-taggable-behavior",
+    "name": "smolowik/propel-taggable-behavior",
     "description": "Add tags functionality to the objects.",
     "keywords": [ "propel", "behavior", "tag" ],
     "license": "MIT",
@@ -9,7 +9,25 @@
             "email": "es@4xxi.com"
         }
     ],
+    "require": {
+        "php": ">=5.2.4",
+        "propel/propel": "2.0.*@dev"
+    },
+    "require-dev": {
+        "behat/behat": "~2.2",
+        "phpunit/phpunit": "~3.7"
+    },
     "autoload": {
-        "classmap": ["src/"]
+        "psr-4": {
+            "smolowik\\Propel\\Behavior\\Taggable\\" : "src"
+        }
+    },
+    "config": {
+        "bin-dir": "bin/"
+    },
+    "type" : "propel-behavior",
+    "extra": {
+        "name": "taggable",
+        "class": "smolowik\\Propel\\Behavior\\Taggable\\TaggableBehavior"
     }
 }
