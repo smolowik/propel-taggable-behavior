@@ -1,11 +1,16 @@
 <?php
-
+namespace smolowik\Propel\Behavior\Taggable;
 /* 
 *  matteosister <matteog@gmail.com>
 *  Just for fun...
 *  Refactored and updated by
 *  Evgeny Smirnov <smirik@gmail.com>
 */
+
+use Propel\Generator\Model\Behavior;
+use Propel\Generator\Model\ForeignKey;
+use Propel\Generator\Model\PropelTypes;
+use Propel\Generator\Model\Table;
 
 class TaggableBehavior extends Behavior {
 
@@ -163,7 +168,7 @@ class TaggableBehavior extends Behavior {
 		$pks = $this->getTable()->getPrimaryKey();
 		if (count($pks) > 1) 
 		{
-			throw new EngineException('The Taggable behavior does not support tables with composite primary keys');
+			throw new \EngineException('The Taggable behavior does not support tables with composite primary keys');
 		}
 		$taggingTableName = $this->getTaggingTableName();
 
